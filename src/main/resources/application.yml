@@ -1,1 +1,3 @@
-spring.application.name=spring-boot-jwt
+spring:
+  profiles:
+    active: local
