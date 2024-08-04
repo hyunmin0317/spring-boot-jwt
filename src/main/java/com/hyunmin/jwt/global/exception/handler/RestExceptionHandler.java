@@ -18,14 +18,14 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(RestException.class)
     protected ResponseEntity<ErrorResponse<Void>> handleRestException(RestException ex) {
-        log.warn("[WARNING] Rest Exception : {}", ex.getMessage());
+        log.warn("[WARNING] {} : {}", ex.getClass(), ex.getMessage());
         ErrorCode errorCode = ex.getErrorCode();
         return ErrorResponse.handle(errorCode);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse<Map<String, String>>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        log.warn("[WARNING] Validation Exception : {}", ex.getMessage());
+        log.warn("[WARNING] {} : {}", ex.getClass(), ex.getMessage());
         ErrorCode errorCode = ErrorCode.VALIDATION_FAILED;
         return ErrorResponse.handle(errorCode, ex.getFieldErrors());
     }
@@ -39,7 +39,7 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse<Void>> handleException(Exception ex) {
-        log.error("[ERROR] Internal Server Error : {}", ex.getMessage());
+        log.error("[ERROR] {} : {}", ex.getClass(), ex.getMessage());
         ErrorCode errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
         return ErrorResponse.handle(errorCode);
     }
