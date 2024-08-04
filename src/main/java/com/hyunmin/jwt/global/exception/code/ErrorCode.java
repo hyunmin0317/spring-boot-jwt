@@ -16,7 +16,10 @@ public enum ErrorCode {
     FORBIDDEN(HttpStatus.FORBIDDEN, "COMMON004", "금지된 요청입니다."),
 
     // Validation Errors
-    VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "VALID001", "입력값에 대한 검증에 실패했습니다.");
+    VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "VALID001", "입력값에 대한 검증에 실패했습니다."),
+
+    // Account Errors
+    ACCOUNT_CONFLICT(HttpStatus.CONFLICT, "ACCOUNT001", "중복된 사용자 이름 입니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
