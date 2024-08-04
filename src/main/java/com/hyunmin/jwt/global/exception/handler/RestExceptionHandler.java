@@ -16,6 +16,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class RestExceptionHandler {
 
+    // 사용자 정의 RestException 처리 메서드
     @ExceptionHandler(RestException.class)
     protected ResponseEntity<ErrorResponse<Void>> handleRestException(RestException ex) {
         log.warn("[WARNING] {} : {}", ex.getClass(), ex.getMessage());
@@ -23,6 +24,7 @@ public class RestExceptionHandler {
         return ErrorResponse.handle(errorCode);
     }
 
+    // 요청 파라미터 검증 실패(MethodArgumentNotValidException) 처리 메서드
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse<Map<String, String>>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         log.warn("[WARNING] {} : {}", ex.getClass(), ex.getMessage());
@@ -30,6 +32,7 @@ public class RestExceptionHandler {
         return ErrorResponse.handle(errorCode, ex.getFieldErrors());
     }
 
+    // 데이터 무결성 위반(DataIntegrityViolationException) 처리 메서드
     @ExceptionHandler(DataIntegrityViolationException.class)
     protected ResponseEntity<ErrorResponse<Void>> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         log.warn("[WARNING] {} : {}", ex.getClass(), ex.getMessage());
@@ -37,6 +40,7 @@ public class RestExceptionHandler {
         return ErrorResponse.handle(errorCode);
     }
 
+    // 기타 모든 예외(Exception) 처리 메서드
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse<Void>> handleException(Exception ex) {
         log.error("[ERROR] {} : {}", ex.getClass(), ex.getMessage());
