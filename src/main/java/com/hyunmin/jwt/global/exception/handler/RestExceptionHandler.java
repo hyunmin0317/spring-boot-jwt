@@ -4,6 +4,7 @@ import com.hyunmin.jwt.global.common.dto.ErrorResponse;
 import com.hyunmin.jwt.global.exception.RestException;
 import com.hyunmin.jwt.global.exception.code.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,6 +28,13 @@ public class RestExceptionHandler {
         log.warn("[WARNING] Validation Exception : {}", ex.getMessage());
         ErrorCode errorCode = ErrorCode.VALIDATION_FAILED;
         return ErrorResponse.handle(errorCode, ex.getFieldErrors());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    protected ResponseEntity<ErrorResponse<Void>> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+        log.warn("[WARNING] {} : {}", ex.getClass(), ex.getMessage());
+        ErrorCode errorCode = ErrorCode.ACCOUNT_CONFLICT;
+        return ErrorResponse.handle(errorCode);
     }
 
     @ExceptionHandler(Exception.class)
