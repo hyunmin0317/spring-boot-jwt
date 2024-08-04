@@ -1,4 +1,4 @@
-package com.hyunmin.jwt.global.common;
+package com.hyunmin.jwt.global.common.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
