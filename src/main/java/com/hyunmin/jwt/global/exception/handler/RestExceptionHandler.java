@@ -36,7 +36,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     protected ResponseEntity<ErrorResponse<Void>> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         log.warn("[WARNING] {} : {}", ex.getClass(), ex.getMessage());
-        ErrorCode errorCode = ErrorCode.ACCOUNT_CONFLICT;
+        ErrorCode errorCode = ErrorCode.VALIDATION_FAILED;
         return ErrorResponse.handle(errorCode);
     }
 
