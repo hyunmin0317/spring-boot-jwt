@@ -14,11 +14,18 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * JWT 기반의 인증을 처리하는 필터 클래스
+ * Spring Security의 OncePerRequestFilter를 상속받아 매 요청마다 한번만 실행됨
+ */
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
 
+    /**
+     * 요청을 필터링하여 JWT 토큰을 검증 후 인증 정보를 설정
+     */
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
