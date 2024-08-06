@@ -32,7 +32,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(PathRequest.toH2Console()).permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .requestMatchers("/api/v1/accounts/register").permitAll()
+                .requestMatchers("/api/v1/accounts/**").permitAll()
         );
 
         return http.build();
