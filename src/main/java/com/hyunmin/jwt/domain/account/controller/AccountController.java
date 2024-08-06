@@ -1,5 +1,7 @@
 package com.hyunmin.jwt.domain.account.controller;
 
+import com.hyunmin.jwt.domain.account.dto.LoginRequestDto;
+import com.hyunmin.jwt.domain.account.dto.LoginResponseDto;
 import com.hyunmin.jwt.domain.account.dto.RegisterRequestDto;
 import com.hyunmin.jwt.domain.account.dto.RegisterResponseDto;
 import com.hyunmin.jwt.domain.account.service.AccountService;
@@ -23,5 +25,11 @@ public class AccountController {
     public ResponseEntity<RegisterResponseDto> register(@Valid @RequestBody RegisterRequestDto requestDto) {
         RegisterResponseDto responseDto = accountService.register(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto requestDto) {
+        LoginResponseDto responseDto = accountService.login(requestDto);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
 }
