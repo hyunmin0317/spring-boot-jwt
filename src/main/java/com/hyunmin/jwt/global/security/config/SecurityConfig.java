@@ -15,6 +15,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Spring Security 설정을 구성하는 클래스
+ * HTTP 보안 설정, 인증 필터 추가 등 보안 관련 설정을 정의
+ */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -22,11 +26,17 @@ public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
 
+    /**
+     * BCrypt 암호화 방식으로 PasswordEncoder 빈을 생성
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Spring Security의 필터 체인 설정 구성
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // CSRF 보호 비활성화
