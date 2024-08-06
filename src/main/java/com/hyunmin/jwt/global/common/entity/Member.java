@@ -1,7 +1,6 @@
-package com.hyunmin.jwt.domain.account.entity;
+package com.hyunmin.jwt.global.common.entity;
 
-import com.hyunmin.jwt.domain.account.entity.enums.MemberRole;
-import com.hyunmin.jwt.global.common.entity.BaseEntity;
+import com.hyunmin.jwt.global.common.entity.enums.MemberRole;
 import jakarta.persistence.*;
 import lombok.*;
 

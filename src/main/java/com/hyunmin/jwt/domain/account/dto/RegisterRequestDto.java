@@ -1,6 +1,6 @@
 package com.hyunmin.jwt.domain.account.dto;
 
-import com.hyunmin.jwt.domain.account.entity.Member;
+import com.hyunmin.jwt.global.common.entity.Member;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 

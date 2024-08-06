@@ -1,6 +1,6 @@
 package com.hyunmin.jwt.global.security.provider;
 
-import com.hyunmin.jwt.domain.account.entity.enums.MemberRole;
+import com.hyunmin.jwt.global.common.entity.enums.MemberRole;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

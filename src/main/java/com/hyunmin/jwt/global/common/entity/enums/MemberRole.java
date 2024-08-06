@@ -1,4 +1,4 @@
-package com.hyunmin.jwt.domain.account.entity.enums;
+package com.hyunmin.jwt.global.common.entity.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

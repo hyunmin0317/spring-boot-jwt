@@ -1,7 +1,7 @@
 package com.hyunmin.jwt.domain.account.dto;
 
-import com.hyunmin.jwt.domain.account.entity.Member;
-import com.hyunmin.jwt.domain.account.entity.enums.MemberRole;
+import com.hyunmin.jwt.global.common.entity.Member;
+import com.hyunmin.jwt.global.common.entity.enums.MemberRole;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
