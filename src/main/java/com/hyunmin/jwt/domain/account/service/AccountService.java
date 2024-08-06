@@ -36,7 +36,7 @@ public class AccountService {
                 .orElseThrow(() -> new RestException(ErrorCode.ACCOUNT_NOT_FOUND));
         checkPassword(requestDto.password(), member.getPassword());
         String accessToken = tokenProvider.createAccessToken(member.getUsername(), member.getRole());
-        return LoginResponseDto.of(accessToken);
+        return LoginResponseDto.of(member.getId(), accessToken);
     }
 
     private void validateUsername(String username) {
