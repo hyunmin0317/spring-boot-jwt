@@ -19,7 +19,7 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // CSRF 보호 비활성화
@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .requestMatchers(PathRequest.toH2Console()).permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers("/api/v1/accounts/**").permitAll()
+                .anyRequest().authenticated()
         );
 
         return http.build();
