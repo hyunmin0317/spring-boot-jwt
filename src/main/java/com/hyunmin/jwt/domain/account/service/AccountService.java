@@ -4,11 +4,11 @@ import com.hyunmin.jwt.domain.account.dto.LoginRequestDto;
 import com.hyunmin.jwt.domain.account.dto.LoginResponseDto;
 import com.hyunmin.jwt.domain.account.dto.RegisterRequestDto;
 import com.hyunmin.jwt.domain.account.dto.RegisterResponseDto;
-import com.hyunmin.jwt.domain.account.entity.Member;
-import com.hyunmin.jwt.domain.account.repository.MemberRepository;
+import com.hyunmin.jwt.global.common.entity.Member;
+import com.hyunmin.jwt.global.common.repository.MemberRepository;
 import com.hyunmin.jwt.global.exception.RestException;
 import com.hyunmin.jwt.global.exception.code.ErrorCode;
-import com.hyunmin.jwt.global.security.provider.TokenProvider;
+import com.hyunmin.jwt.global.security.provider.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class AccountService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    private final TokenProvider tokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
     public RegisterResponseDto register(RegisterRequestDto requestDto) {
@@ -35,7 +35,7 @@ public class AccountService {
         Member member = memberRepository.findByUsername(requestDto.username())
                 .orElseThrow(() -> new RestException(ErrorCode.ACCOUNT_NOT_FOUND));
         checkPassword(requestDto.password(), member.getPassword());
-        String accessToken = tokenProvider.createAccessToken(member.getUsername(), member.getRole());
+        String accessToken = jwtTokenProvider.createAccessToken(member.getUsername(), member.getRole());
         return LoginResponseDto.of(member.getId(), accessToken);
     }
 

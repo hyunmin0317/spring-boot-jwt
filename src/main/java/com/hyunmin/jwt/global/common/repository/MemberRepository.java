@@ -1,6 +1,6 @@
-package com.hyunmin.jwt.domain.account.repository;
+package com.hyunmin.jwt.global.common.repository;
 
-import com.hyunmin.jwt.domain.account.entity.Member;
+import com.hyunmin.jwt.global.common.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
