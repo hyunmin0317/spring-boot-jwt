@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.io.IOException;
 /**
  * JWT 인증 예외를 핸들링하는 필터 클래스
  */
+@Slf4j
 public class JwtAuthenticationExceptionFilter extends OncePerRequestFilter {
 
     /**
@@ -26,9 +28,9 @@ public class JwtAuthenticationExceptionFilter extends OncePerRequestFilter {
         try {
             // 필터 체인 계속 실행
             filterChain.doFilter(request, response);
-        } catch (JwtAuthenticationException exception) {
+        } catch (JwtAuthenticationException ex) {
             // 예외 발생 시 오류 응답 설정
-            JwtAuthenticationExceptionHandler.handleException(response, exception);
+            JwtAuthenticationExceptionHandler.handleException(response, ex, ex.getErrorCode());
         }
     }
 }
