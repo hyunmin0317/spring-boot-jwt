@@ -1,5 +1,6 @@
 package com.hyunmin.jwt.global.security.config;
 
+import com.hyunmin.jwt.global.security.filter.JwtAuthenticationExceptionFilter;
 import com.hyunmin.jwt.global.security.filter.JwtAuthenticationFilter;
 import com.hyunmin.jwt.global.security.provider.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -58,6 +59,9 @@ public class SecurityConfig {
 
         // JWT 기반 인증을 처리하기 위해 JwtAuthenticationFilter를 UsernamePasswordAuthenticationFilter 이전에 추가
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+
+        // JWT 인증 예외 핸들링 필터 추가
+        http.addFilterBefore(new JwtAuthenticationExceptionFilter(), JwtAuthenticationFilter.class);
 
         return http.build();
     }
