@@ -1,8 +1,8 @@
 package com.hyunmin.jwt.global.security.provider;
 
 import com.hyunmin.jwt.global.common.entity.enums.MemberRole;
-import com.hyunmin.jwt.global.exception.RestException;
 import com.hyunmin.jwt.global.exception.code.ErrorCode;
+import com.hyunmin.jwt.global.security.exception.JwtAuthenticationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -71,9 +71,9 @@ public class JwtTokenProvider {
             getClaims(token);
             return true;
         } catch (ExpiredJwtException e) {
-            throw new RestException(isRefresh ? ErrorCode.RELOGIN_EXCEPTION : ErrorCode.EXPIRED_JWT_EXCEPTION);
+            throw new JwtAuthenticationException(isRefresh ? ErrorCode.RELOGIN_EXCEPTION : ErrorCode.EXPIRED_JWT_EXCEPTION);
         } catch (JwtException | IllegalArgumentException e) {
-            throw new RestException(ErrorCode.INVALID_TOKEN_EXCEPTION);
+            throw new JwtAuthenticationException(ErrorCode.INVALID_TOKEN_EXCEPTION);
         }
     }
 

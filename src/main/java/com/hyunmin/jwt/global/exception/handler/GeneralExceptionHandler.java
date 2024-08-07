@@ -1,7 +1,7 @@
 package com.hyunmin.jwt.global.exception.handler;
 
 import com.hyunmin.jwt.global.common.dto.ErrorResponse;
-import com.hyunmin.jwt.global.exception.RestException;
+import com.hyunmin.jwt.global.exception.GeneralException;
 import com.hyunmin.jwt.global.exception.code.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,11 +14,11 @@ import java.util.Map;
 
 @Slf4j
 @RestControllerAdvice
-public class RestExceptionHandler {
+public class GeneralExceptionHandler {
 
-    // 사용자 정의 RestException 처리 메서드
-    @ExceptionHandler(RestException.class)
-    protected ResponseEntity<ErrorResponse<Void>> handleRestException(RestException ex) {
+    // 사용자 정의 예외(GeneralException) 처리 메서드
+    @ExceptionHandler(GeneralException.class)
+    protected ResponseEntity<ErrorResponse<Void>> handleGeneralException(GeneralException ex) {
         log.warn("[WARNING] {} : {}", ex.getClass(), ex.getMessage());
         ErrorCode errorCode = ex.getErrorCode();
         return ErrorResponse.handle(errorCode);

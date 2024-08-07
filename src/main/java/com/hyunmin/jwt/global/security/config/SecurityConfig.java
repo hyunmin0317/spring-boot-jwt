@@ -1,6 +1,9 @@
 package com.hyunmin.jwt.global.security.config;
 
+import com.hyunmin.jwt.global.security.filter.JwtAuthenticationExceptionFilter;
 import com.hyunmin.jwt.global.security.filter.JwtAuthenticationFilter;
+import com.hyunmin.jwt.global.security.handler.JwtAccessDeniedHandler;
+import com.hyunmin.jwt.global.security.handler.JwtAuthenticationEntryPoint;
 import com.hyunmin.jwt.global.security.provider.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -58,6 +61,15 @@ public class SecurityConfig {
 
         // JWT 기반 인증을 처리하기 위해 JwtAuthenticationFilter를 UsernamePasswordAuthenticationFilter 이전에 추가
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+
+        // JWT 인증 예외 핸들링 필터 추가
+        http.addFilterBefore(new JwtAuthenticationExceptionFilter(), JwtAuthenticationFilter.class);
+
+        // 인증 및 인가 오류 핸들러 추가
+        http.exceptionHandling(exceptionHandling -> exceptionHandling
+                .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+                .accessDeniedHandler(new JwtAccessDeniedHandler())
+        );
 
         return http.build();
     }
