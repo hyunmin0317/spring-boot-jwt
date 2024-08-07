@@ -1,6 +1,8 @@
 package com.hyunmin.jwt.global.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hyunmin.jwt.global.exception.code.ErrorCode;
 import lombok.NonNull;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +31,7 @@ public record ErrorResponse<T>(
         return ResponseEntity.status(errorCode.getHttpStatus()).body(of(errorCode, fieldErrors));
     }
 
-    private static <T> ErrorResponse<T> from(ErrorCode errorCode) {
+    public static <T> ErrorResponse<T> from(ErrorCode errorCode) {
         return new ErrorResponse<>(errorCode.getCode(), errorCode.getMessage(), null);
     }
 
@@ -41,5 +43,9 @@ public record ErrorResponse<T>(
         return fieldErrors.stream().collect(
                 Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage)
         );
+    }
+
+    public String toJsonString() throws JsonProcessingException {
+        return new ObjectMapper().writeValueAsString(this);
     }
 }
