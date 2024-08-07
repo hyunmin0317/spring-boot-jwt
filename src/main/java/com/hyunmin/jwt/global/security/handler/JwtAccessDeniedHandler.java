@@ -23,6 +23,6 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response,
                        AccessDeniedException ex) throws IOException {
-        JwtAuthenticationExceptionHandler.handleException(response, ex, ErrorCode.FORBIDDEN);
+        JwtAuthenticationExceptionHandler.handleException(response, ex, ErrorCode.FORBIDDEN_EXCEPTION);
     }
 }
