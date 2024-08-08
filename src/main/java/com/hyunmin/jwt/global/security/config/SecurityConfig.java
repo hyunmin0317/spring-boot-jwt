@@ -55,6 +55,8 @@ public class SecurityConfig {
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 // API 계정 관련 요청에 대한 접근 허용
                 .requestMatchers("/api/v1/accounts/**").permitAll()
+                // 전체 사용자 정보 조회 API 관리자 권한만 접근 허용
+                .requestMatchers("/api/v1/members").hasRole("ADMIN")
                 // 나머지 모든 요청은 인증 필요
                 .anyRequest().authenticated()
         );
