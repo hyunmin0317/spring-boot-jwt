@@ -3,6 +3,7 @@ package com.hyunmin.jwt.domain.member.dto;
 import com.hyunmin.jwt.global.common.entity.Member;
 import com.hyunmin.jwt.global.common.entity.enums.MemberRole;
 import lombok.Builder;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 
@@ -23,5 +24,9 @@ public record MemberInfoResponseDto(
                 .createdAt(member.getCreatedAt())
                 .updatedAt(member.getUpdatedAt())
                 .build();
+    }
+
+    public static Page<MemberInfoResponseDto> from(Page<Member> memberPage) {
+        return memberPage.map(MemberInfoResponseDto::from);
     }
 }
