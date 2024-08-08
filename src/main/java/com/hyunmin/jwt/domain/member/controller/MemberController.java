@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,12 +21,14 @@ public class MemberController {
     private final MemberQueryService memberQueryService;
 
     @GetMapping
-    public Page<MemberInfoResponseDto> findAll(@ParameterObject Pageable pageable) {
-        return memberQueryService.findAll(pageable);
+    public ResponseEntity<Page<MemberInfoResponseDto>> findAll(@ParameterObject Pageable pageable) {
+        Page<MemberInfoResponseDto> responseDtoPage = memberQueryService.findAll(pageable);
+        return ResponseEntity.ok(responseDtoPage);
     }
 
     @GetMapping("/info")
-    public MemberInfoResponseDto memberInfo(@AuthMember Member member) {
-        return MemberInfoResponseDto.from(member);
+    public ResponseEntity<MemberInfoResponseDto> memberInfo(@AuthMember Member member) {
+        MemberInfoResponseDto responseDto = MemberInfoResponseDto.from(member);
+        return ResponseEntity.ok(responseDto);
     }
 }
