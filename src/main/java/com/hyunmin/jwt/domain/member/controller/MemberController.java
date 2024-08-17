@@ -4,6 +4,7 @@ import com.hyunmin.jwt.domain.member.dto.MemberInfoResponseDto;
 import com.hyunmin.jwt.domain.member.service.MemberQueryService;
 import com.hyunmin.jwt.global.common.entity.Member;
 import com.hyunmin.jwt.global.security.annotation.AuthMember;
+import com.hyunmin.jwt.global.validation.annotation.PermissionCheck;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
@@ -28,7 +29,7 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MemberInfoResponseDto> findById(@PathVariable Long id) {
+    public ResponseEntity<MemberInfoResponseDto> findById(@PermissionCheck @PathVariable Long id) {
         MemberInfoResponseDto responseDto = memberQueryService.findById(id);
         return ResponseEntity.ok(responseDto);
     }
