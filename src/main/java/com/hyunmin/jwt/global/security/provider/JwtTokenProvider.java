@@ -67,6 +67,7 @@ public class JwtTokenProvider {
      * @param isRefresh JWT refresh 토큰인지 여부
      */
     public boolean validateToken(String token, boolean isRefresh) {
+        if (!StringUtils.hasText(token)) return false;
         try {
             getClaims(token);
             return true;

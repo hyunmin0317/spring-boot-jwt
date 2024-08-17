@@ -1,8 +1,8 @@
 package com.hyunmin.jwt.domain.member.controller;
 
 import com.hyunmin.jwt.domain.member.dto.MemberInfoResponseDto;
+import com.hyunmin.jwt.domain.member.service.MemberQueryService;
 import com.hyunmin.jwt.global.common.entity.Member;
-import com.hyunmin.jwt.global.common.service.MemberQueryService;
 import com.hyunmin.jwt.global.security.annotation.AuthMember;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
