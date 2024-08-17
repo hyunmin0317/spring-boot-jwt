@@ -15,8 +15,8 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public Member findByUsername(String username) {
-        return memberRepository.findByUsername(username)
+    public Member findById(Long id) {
+        return memberRepository.findById(id)
                 .orElseThrow(() -> new GeneralException(ErrorCode.MEMBER_UNAUTHORIZED));
     }
 }

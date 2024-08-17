@@ -41,8 +41,8 @@ public class AuthMemberArgumentResolver implements HandlerMethodArgumentResolver
                                   @NonNull NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         String jwt = jwtTokenProvider.resolveToken(request);
-        String username = jwtTokenProvider.validateToken(jwt, false) ?
-                jwtTokenProvider.getAuthentication(jwt).getName() : null;
-        return memberService.findByUsername(username);
+        Long id = jwtTokenProvider.validateToken(jwt, false) ?
+                Long.valueOf(jwtTokenProvider.getAuthentication(jwt).getName()) : null;
+        return memberService.findById(id);
     }
 }

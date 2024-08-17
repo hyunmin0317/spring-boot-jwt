@@ -43,9 +43,9 @@ public class JwtTokenProvider {
     /**
      * JWT access 토큰 생성
      */
-    public String createAccessToken(String username, MemberRole memberRole) {
+    public String createAccessToken(Long memberId, MemberRole memberRole) {
         return Jwts.builder()
-                .subject(username)
+                .subject(String.valueOf(memberId))
                 .claim("memberRole", memberRole.name())
                 .signWith(secretKey)
                 .expiration(expirationDate())
