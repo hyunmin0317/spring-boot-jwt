@@ -9,7 +9,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -32,8 +31,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 요청에서 JWT 토큰 추출
         String jwt = jwtTokenProvider.resolveToken(request);
 
-        // JWT 토큰이 존재하고 유효한지 검증 후 인증 정보를 가져와서 설정
-        Authentication authentication = StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt, false) ?
+        // JWT 토큰이 유효한지 검증 후 인증 정보를 가져와서 설정
+        Authentication authentication = jwtTokenProvider.validateToken(jwt, false) ?
                 jwtTokenProvider.getAuthentication(jwt) : null;
 
         // 인증 정보를 SecurityContext에 설정

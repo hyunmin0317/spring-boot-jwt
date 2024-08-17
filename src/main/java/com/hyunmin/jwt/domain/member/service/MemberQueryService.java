@@ -1,4 +1,4 @@
-package com.hyunmin.jwt.global.common.service;
+package com.hyunmin.jwt.domain.member.service;
 
 import com.hyunmin.jwt.domain.member.dto.MemberInfoResponseDto;
 import com.hyunmin.jwt.global.common.entity.Member;
@@ -18,13 +18,14 @@ public class MemberQueryService {
 
     private final MemberRepository memberRepository;
 
-    public Member findByUsername(String username) {
-        return memberRepository.findByUsername(username)
-                .orElseThrow(() -> new GeneralException(ErrorCode.ACCOUNT_NOT_FOUND));
-    }
-
     public Page<MemberInfoResponseDto> findAll(Pageable pageable) {
         Page<Member> memberPage = memberRepository.findAll(pageable);
         return MemberInfoResponseDto.from(memberPage);
+    }
+
+    public MemberInfoResponseDto findById(Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new GeneralException(ErrorCode.MEMBER_NOT_FOUND));
+        return MemberInfoResponseDto.from(member);
     }
 }
