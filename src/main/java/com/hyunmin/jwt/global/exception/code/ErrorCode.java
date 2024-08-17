@@ -30,7 +30,8 @@ public enum ErrorCode {
 
     // Member Errors
     MEMBER_UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "MEMBER001", "탈퇴한 사용자 입니다."),
-    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER002", "해당 사용자가 없습니다.");
+    MEMBER_FORBIDDEN(HttpStatus.FORBIDDEN, "MEMBER002", "사용자 권한이 없습니다."),
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER003", "해당 사용자가 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
