@@ -35,8 +35,9 @@ public class AccountService {
         Member member = memberRepository.findByUsername(requestDto.username())
                 .orElseThrow(() -> new GeneralException(ErrorCode.ACCOUNT_NOT_FOUND));
         checkPassword(requestDto.password(), member.getPassword());
-        String accessToken = jwtTokenProvider.createAccessToken(member.getId(), member.getRole());
-        return LoginResponseDto.of(member.getId(), accessToken);
+        String accessToken = jwtTokenProvider.createAccessToken(member.getId(), member.getRole(), false);
+        String refreshToken = jwtTokenProvider.createAccessToken(member.getId(), member.getRole(), true);
+        return LoginResponseDto.of(member.getId(), accessToken, refreshToken);
     }
 
     private void validateUsername(String username) {

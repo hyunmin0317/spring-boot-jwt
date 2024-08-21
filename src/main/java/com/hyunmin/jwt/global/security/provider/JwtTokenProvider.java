@@ -32,23 +32,26 @@ public class JwtTokenProvider {
 
     private final SecretKey secretKey;
     private final Long accessExpirationTime;
+    private final Long refreshExpirationTime;
 
     public JwtTokenProvider(
             @Value("${jwt.secret}") String secret,
-            @Value("${jwt.token.access-expiration-time}") long accessExpirationTime) {
+            @Value("${jwt.token.access-expiration-time}") Long accessExpirationTime,
+            @Value("${jwt.token.refresh-expiration-time}") Long refreshExpirationTime) {
         this.secretKey = generateSecretKeySpec(secret);
         this.accessExpirationTime = accessExpirationTime;
+        this.refreshExpirationTime = refreshExpirationTime;
     }
 
     /**
      * JWT access 토큰 생성
      */
-    public String createAccessToken(Long memberId, MemberRole memberRole) {
+    public String createAccessToken(Long memberId, MemberRole memberRole, boolean isRefresh) {
         return Jwts.builder()
                 .subject(String.valueOf(memberId))
                 .claim("memberRole", memberRole.name())
                 .signWith(secretKey)
-                .expiration(expirationDate())
+                .expiration(expirationDate(isRefresh))
                 .compact();
     }
 
@@ -96,9 +99,10 @@ public class JwtTokenProvider {
     }
 
     // 액세스 토큰의 만료 시간 계산
-    private Date expirationDate() {
+    private Date expirationDate(boolean isRefresh) {
         Date now = new Date();
-        return new Date(now.getTime() + this.accessExpirationTime);
+        Long expirationTime = isRefresh ? this.refreshExpirationTime : this.accessExpirationTime;
+        return new Date(now.getTime() + expirationTime);
     }
 
     // JWT 토큰에서 클레임을 추출
