@@ -15,15 +15,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class AccountService {
 
     private final MemberRepository memberRepository;
+    private final RefreshTokenService refreshTokenService;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @Transactional
     public RegisterResponseDto register(RegisterRequestDto requestDto) {
         validateUsername(requestDto.username());
         String encodedPw = passwordEncoder.encode(requestDto.password());
@@ -37,6 +37,7 @@ public class AccountService {
         checkPassword(requestDto.password(), member.getPassword());
         String accessToken = jwtTokenProvider.createAccessToken(member.getId(), member.getRole(), false);
         String refreshToken = jwtTokenProvider.createAccessToken(member.getId(), member.getRole(), true);
+        refreshTokenService.saveRefreshToken(member.getId(), refreshToken);
         return LoginResponseDto.of(member.getId(), accessToken, refreshToken);
     }
 
