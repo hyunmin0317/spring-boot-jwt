@@ -4,6 +4,7 @@ import com.hyunmin.jwt.domain.account.entity.RefreshToken;
 import com.hyunmin.jwt.domain.account.repository.RefreshTokenRepository;
 import com.hyunmin.jwt.global.exception.GeneralException;
 import com.hyunmin.jwt.global.exception.code.ErrorCode;
+import com.hyunmin.jwt.global.security.config.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class RefreshTokenService {
 
     private final RefreshTokenRepository refreshTokenRepository;
+    private final JwtProperties jwtProperties;
 
     public RefreshToken findRefreshToken(String token) {
         return refreshTokenRepository.findById(token)
@@ -24,7 +26,8 @@ public class RefreshTokenService {
 
     @Transactional
     public void saveRefreshToken(Long memberId, String token) {
-        RefreshToken refreshToken = RefreshToken.of(memberId, token);
+        long expirationTime = jwtProperties.getExpirationTime(true);
+        RefreshToken refreshToken = RefreshToken.of(memberId, token, expirationTime);
         refreshTokenRepository.save(refreshToken);
     }
 
