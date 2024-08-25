@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AccountService {
 
@@ -24,6 +24,7 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
+    @Transactional
     public RegisterResponseDto register(RegisterRequestDto requestDto) {
         validateUsername(requestDto.username());
         String encodedPw = passwordEncoder.encode(requestDto.password());
@@ -31,6 +32,7 @@ public class AccountService {
         return RegisterResponseDto.from(memberRepository.save(member));
     }
 
+    @Transactional
     public LoginResponseDto login(LoginRequestDto requestDto) {
         Member member = memberRepository.findByUsername(requestDto.username())
                 .orElseThrow(() -> new GeneralException(ErrorCode.ACCOUNT_NOT_FOUND));
