@@ -3,6 +3,7 @@ package com.hyunmin.jwt.domain.account.entity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.TimeToLive;
 
 @RedisHash
 @Getter
@@ -16,10 +17,14 @@ public class RefreshToken {
 
     private Long memberId;
 
-    public static RefreshToken of(Long memberId, String token) {
+    @TimeToLive
+    private long expirationTime;
+
+    public static RefreshToken of(Long memberId, String token, long expirationTime) {
         return RefreshToken.builder()
                 .memberId(memberId)
                 .token(token)
+                .expirationTime(expirationTime)
                 .build();
     }
 }

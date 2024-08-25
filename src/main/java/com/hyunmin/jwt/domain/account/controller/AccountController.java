@@ -1,9 +1,6 @@
 package com.hyunmin.jwt.domain.account.controller;
 
-import com.hyunmin.jwt.domain.account.dto.LoginRequestDto;
-import com.hyunmin.jwt.domain.account.dto.LoginResponseDto;
-import com.hyunmin.jwt.domain.account.dto.RegisterRequestDto;
-import com.hyunmin.jwt.domain.account.dto.RegisterResponseDto;
+import com.hyunmin.jwt.domain.account.dto.*;
 import com.hyunmin.jwt.domain.account.service.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +27,12 @@ public class AccountController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto requestDto) {
         LoginResponseDto responseDto = accountService.login(requestDto);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<LoginResponseDto> refresh(@Valid @RequestBody RefreshRequestDto requestDto) {
+        LoginResponseDto responseDto = accountService.refresh(requestDto);
         return ResponseEntity.ok(responseDto);
     }
 }

@@ -24,13 +24,13 @@ public class JwtProperties {
     }
 
     // JWT 토큰의 만료 시간을 반환
-    public Long getExpirationTime(boolean isRefresh) {
+    public long getExpirationTime(boolean isRefresh) {
         return isRefresh ? token.refreshExpirationTime : token.accessExpirationTime;
     }
 
     @Data
     public static class TokenProperties {
-        private Long accessExpirationTime;
-        private Long refreshExpirationTime;
+        private long accessExpirationTime;
+        private long refreshExpirationTime;
     }
 }

@@ -25,8 +25,9 @@ public enum ErrorCode {
     INVALID_TOKEN_EXCEPTION(HttpStatus.UNAUTHORIZED, "ACCOUNT004", "토큰이 올바르지 않습니다."),
     EXPIRED_JWT_EXCEPTION(HttpStatus.UNAUTHORIZED, "ACCOUNT005", "기존 토큰이 만료되었습니다. 토큰을 재발급해주세요."),
     RELOGIN_EXCEPTION(HttpStatus.UNAUTHORIZED, "ACCOUNT006", "모든 토큰이 만료되었습니다. 다시 로그인해주세요."),
-    UNAUTHORIZED_EXCEPTION(HttpStatus.UNAUTHORIZED, "ACCOUNT007", "로그인 후 이용가능합니다. 토큰을 입력해 주세요"),
+    UNAUTHORIZED_EXCEPTION(HttpStatus.UNAUTHORIZED, "ACCOUNT007", "로그인 후 이용가능합니다. 토큰을 입력해 주세요."),
     FORBIDDEN_EXCEPTION(HttpStatus.FORBIDDEN, "ACCOUNT008", "권한이 없습니다."),
+    INVALID_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "ACCOUNT009", "리프레시 토큰이 유효하지 않습니다. 다시 로그인 해주세요."),
 
     // Member Errors
     MEMBER_UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "MEMBER001", "탈퇴한 사용자 입니다."),
