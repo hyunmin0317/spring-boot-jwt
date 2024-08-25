@@ -30,7 +30,7 @@ public class JwtProperties {
 
     @Data
     public static class TokenProperties {
-        private Long accessExpirationTime;
-        private Long refreshExpirationTime;
+        private long accessExpirationTime;
+        private long refreshExpirationTime;
     }
 }

@@ -18,13 +18,13 @@ public class RefreshToken {
     private Long memberId;
 
     @TimeToLive
-    private long timeToLive;
+    private long expirationTime;
 
-    public static RefreshToken of(Long memberId, String token, Long timeToLive) {
+    public static RefreshToken of(Long memberId, String token, long expirationTime) {
         return RefreshToken.builder()
                 .memberId(memberId)
                 .token(token)
-                .timeToLive(timeToLive)
+                .expirationTime(expirationTime)
                 .build();
     }
 }
