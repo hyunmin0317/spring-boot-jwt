@@ -3,6 +3,7 @@ package com.hyunmin.jwt.domain.account.service;
 import com.hyunmin.jwt.domain.account.dto.*;
 import com.hyunmin.jwt.domain.account.entity.RefreshToken;
 import com.hyunmin.jwt.global.common.entity.Member;
+import com.hyunmin.jwt.global.common.entity.enums.MemberRole;
 import com.hyunmin.jwt.global.common.repository.MemberRepository;
 import com.hyunmin.jwt.global.exception.GeneralException;
 import com.hyunmin.jwt.global.exception.code.ErrorCode;
@@ -33,10 +34,7 @@ public class AccountService {
         Member member = memberRepository.findByUsername(requestDto.username())
                 .orElseThrow(() -> new GeneralException(ErrorCode.ACCOUNT_NOT_FOUND));
         checkPassword(requestDto.password(), member.getPassword());
-        String accessToken = jwtTokenProvider.createAccessToken(member.getId(), member.getRole(), false);
-        String refreshToken = jwtTokenProvider.createAccessToken(member.getId(), member.getRole(), true);
-        refreshTokenService.saveRefreshToken(member.getId(), refreshToken);
-        return LoginResponseDto.of(member.getId(), accessToken, refreshToken);
+        return generateToken(member.getId(), member.getRole());
     }
 
     public LoginResponseDto refresh(RefreshRequestDto requestDto) {
@@ -45,10 +43,14 @@ public class AccountService {
         Member member = memberRepository.findById(oldRefreshToken.getMemberId())
                 .orElseThrow(() -> new GeneralException(ErrorCode.ACCOUNT_NOT_FOUND));
         refreshTokenService.deleteRefreshToken(oldRefreshToken.getToken());
-        String accessToken = jwtTokenProvider.createAccessToken(member.getId(), member.getRole(), false);
-        String refreshToken = jwtTokenProvider.createAccessToken(member.getId(), member.getRole(), true);
-        refreshTokenService.saveRefreshToken(member.getId(), refreshToken);
-        return LoginResponseDto.of(member.getId(), accessToken, refreshToken);
+        return generateToken(member.getId(), member.getRole());
+    }
+
+    private LoginResponseDto generateToken(Long memberId, MemberRole memberRole) {
+        String accessToken = jwtTokenProvider.createAccessToken(memberId, memberRole, false);
+        String refreshToken = jwtTokenProvider.createAccessToken(memberId, memberRole, true);
+        refreshTokenService.saveRefreshToken(memberId, refreshToken);
+        return LoginResponseDto.of(memberId, accessToken, refreshToken);
     }
 
     private void validateUsername(String username) {
