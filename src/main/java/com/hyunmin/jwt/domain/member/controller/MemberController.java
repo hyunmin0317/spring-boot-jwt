@@ -1,6 +1,7 @@
 package com.hyunmin.jwt.domain.member.controller;
 
 import com.hyunmin.jwt.domain.member.dto.MemberInfoResponseDto;
+import com.hyunmin.jwt.domain.member.service.MemberCommandService;
 import com.hyunmin.jwt.domain.member.service.MemberQueryService;
 import com.hyunmin.jwt.global.common.entity.Member;
 import com.hyunmin.jwt.global.security.annotation.AuthMember;
@@ -10,10 +11,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     private final MemberQueryService memberQueryService;
+    private final MemberCommandService memberCommandService;
 
     @GetMapping
     public ResponseEntity<Page<MemberInfoResponseDto>> findAll(@ParameterObject Pageable pageable) {
@@ -38,5 +37,11 @@ public class MemberController {
     public ResponseEntity<MemberInfoResponseDto> getMemberInfo(@AuthMember Member member) {
         MemberInfoResponseDto responseDto = MemberInfoResponseDto.from(member);
         return ResponseEntity.ok(responseDto);
+    }
+
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> deleteMember(@AuthMember Member member) {
+        memberCommandService.deleteMember(member.getId());
+        return ResponseEntity.noContent().build();
     }
 }
