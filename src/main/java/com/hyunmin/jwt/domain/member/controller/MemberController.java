@@ -34,8 +34,8 @@ public class MemberController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @GetMapping("/info")
-    public ResponseEntity<MemberInfoResponseDto> memberInfo(@AuthMember Member member) {
+    @GetMapping("/me")
+    public ResponseEntity<MemberInfoResponseDto> getMemberInfo(@AuthMember Member member) {
         MemberInfoResponseDto responseDto = MemberInfoResponseDto.from(member);
         return ResponseEntity.ok(responseDto);
     }
