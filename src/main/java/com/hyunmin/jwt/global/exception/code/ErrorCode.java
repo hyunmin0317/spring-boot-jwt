@@ -29,9 +29,8 @@ public enum ErrorCode {
     INVALID_REFRESH_TOKEN(401, "ACCOUNT009", "리프레시 토큰이 유효하지 않습니다. 다시 로그인 해주세요."),
 
     // Member Errors
-    MEMBER_UNAUTHORIZED(401, "MEMBER001", "탈퇴한 사용자 입니다."),
-    MEMBER_FORBIDDEN(403, "MEMBER002", "사용자 권한이 없습니다."),
-    MEMBER_NOT_FOUND(404, "MEMBER003", "해당 사용자가 없습니다.");
+    MEMBER_FORBIDDEN(403, "MEMBER001", "사용자 권한이 없습니다."),
+    MEMBER_NOT_FOUND(404, "MEMBER002", "해당 사용자가 없습니다.");
 
     private final int value;
     private final String code;

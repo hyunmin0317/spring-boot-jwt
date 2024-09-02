@@ -1,7 +1,5 @@
 package com.hyunmin.jwt.global.security.annotation;
 
-import com.hyunmin.jwt.global.common.entity.Member;
-import com.hyunmin.jwt.global.common.service.MemberService;
 import com.hyunmin.jwt.global.security.provider.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
@@ -20,7 +18,6 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @RequiredArgsConstructor
 public class AuthMemberArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private final MemberService memberService;
     private final JwtTokenProvider jwtTokenProvider;
 
     /**
@@ -29,7 +26,7 @@ public class AuthMemberArgumentResolver implements HandlerMethodArgumentResolver
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         boolean hasAuthMemberAnnotation = parameter.hasParameterAnnotation(AuthMember.class);
-        boolean isMemberType = Member.class.isAssignableFrom(parameter.getParameterType());
+        boolean isMemberType = Long.class.isAssignableFrom(parameter.getParameterType());
         return hasAuthMemberAnnotation && isMemberType;
     }
 
@@ -37,12 +34,11 @@ public class AuthMemberArgumentResolver implements HandlerMethodArgumentResolver
      * 해당 컨트롤러 메서드의 파라미터 처리
      */
     @Override
-    public Member resolveArgument(@NonNull MethodParameter parameter, ModelAndViewContainer mavContainer,
-                                  @NonNull NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+    public Long resolveArgument(@NonNull MethodParameter parameter, ModelAndViewContainer mavContainer,
+                                @NonNull NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         String jwt = jwtTokenProvider.resolveToken(request);
-        Long id = jwtTokenProvider.validateToken(jwt, false) ?
+        return jwtTokenProvider.validateToken(jwt, false) ?
                 Long.valueOf(jwtTokenProvider.getAuthentication(jwt).getName()) : null;
-        return memberService.findById(id);
     }
 }
