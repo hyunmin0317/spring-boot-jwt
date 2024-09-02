@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hyunmin.jwt.global.exception.code.ErrorCode;
 import lombok.NonNull;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 
@@ -24,11 +25,11 @@ public record ErrorResponse<T>(
 ) {
 
     public static ResponseEntity<ErrorResponse<Void>> handle(ErrorCode errorCode) {
-        return ResponseEntity.status(errorCode.getHttpStatus()).body(from(errorCode));
+        return ResponseEntity.status(HttpStatus.valueOf(errorCode.getValue())).body(from(errorCode));
     }
 
     public static ResponseEntity<ErrorResponse<Map<String, String>>> handle(ErrorCode errorCode, List<FieldError> fieldErrors) {
-        return ResponseEntity.status(errorCode.getHttpStatus()).body(of(errorCode, fieldErrors));
+        return ResponseEntity.status(HttpStatus.valueOf(errorCode.getValue())).body(of(errorCode, fieldErrors));
     }
 
     public static <T> ErrorResponse<T> from(ErrorCode errorCode) {
