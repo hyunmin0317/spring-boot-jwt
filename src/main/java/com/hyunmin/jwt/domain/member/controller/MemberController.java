@@ -4,7 +4,6 @@ import com.hyunmin.jwt.domain.member.dto.ChangePasswordRequestDto;
 import com.hyunmin.jwt.domain.member.dto.MemberInfoResponseDto;
 import com.hyunmin.jwt.domain.member.service.MemberCommandService;
 import com.hyunmin.jwt.domain.member.service.MemberQueryService;
-import com.hyunmin.jwt.global.common.entity.Member;
 import com.hyunmin.jwt.global.security.annotation.AuthMember;
 import com.hyunmin.jwt.global.validation.annotation.PermissionCheck;
 import jakarta.validation.Valid;
@@ -36,21 +35,21 @@ public class MemberController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<MemberInfoResponseDto> getMemberInfo(@AuthMember Member member) {
-        MemberInfoResponseDto responseDto = MemberInfoResponseDto.from(member);
+    public ResponseEntity<MemberInfoResponseDto> getMemberInfo(@AuthMember Long memberId) {
+        MemberInfoResponseDto responseDto = memberQueryService.findById(memberId);
         return ResponseEntity.ok(responseDto);
     }
 
     @DeleteMapping("/me")
-    public ResponseEntity<Void> deleteMember(@AuthMember Member member) {
-        memberCommandService.deleteMember(member.getId());
+    public ResponseEntity<Void> deleteMember(@AuthMember Long memberId) {
+        memberCommandService.deleteMember(memberId);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/me")
-    public ResponseEntity<MemberInfoResponseDto> changePassword(@AuthMember Member member,
+    public ResponseEntity<MemberInfoResponseDto> changePassword(@AuthMember Long memberId,
                                                                 @Valid @RequestBody ChangePasswordRequestDto requestDto) {
-        MemberInfoResponseDto responseDto = memberCommandService.changePassword(member.getId(), requestDto);
+        MemberInfoResponseDto responseDto = memberCommandService.changePassword(memberId, requestDto);
         return ResponseEntity.ok(responseDto);
     }
 }
