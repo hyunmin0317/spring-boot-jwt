@@ -1,6 +1,5 @@
 package com.hyunmin.jwt.global.security.annotation;
 
-import com.hyunmin.jwt.global.common.service.MemberService;
 import com.hyunmin.jwt.global.security.provider.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
@@ -19,7 +18,6 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @RequiredArgsConstructor
 public class AuthMemberArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private final MemberService memberService;
     private final JwtTokenProvider jwtTokenProvider;
 
     /**
