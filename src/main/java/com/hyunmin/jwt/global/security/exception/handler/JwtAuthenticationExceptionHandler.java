@@ -22,7 +22,7 @@ public class JwtAuthenticationExceptionHandler {
         // 응답의 Content-Type, 문자 인코딩, 상태 코드 설정
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("UTF-8");
-        response.setStatus(errorCode.getHttpStatus().value());
+        response.setStatus(errorCode.getValue());
 
         // ErrorResponse 객체를 JSON 문자열로 변환하여 응답 본문에 작성
         ErrorResponse<Object> errorResponse = ErrorResponse.from(errorCode);
