@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: ${SPRING_PROFILE:local}
 
 jwt:
   secret: ${JWT_SECRET}
