@@ -6,7 +6,6 @@ import com.hyunmin.jwt.global.security.handler.JwtAccessDeniedHandler;
 import com.hyunmin.jwt.global.security.handler.JwtAuthenticationEntryPoint;
 import com.hyunmin.jwt.global.security.provider.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -51,8 +50,7 @@ public class SecurityConfig {
         // 경로별 인가 작업
         http.authorizeHttpRequests(authorize -> authorize
                 // H2 콘솔과 Swagger UI 및 API 문서에 대한 접근 허용
-                .requestMatchers(PathRequest.toH2Console()).permitAll()
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers("/h2-console/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 // API 계정 관련 요청에 대한 접근 허용
                 .requestMatchers("/api/v1/accounts/**").permitAll()
                 // 전체 사용자 정보 조회 API 관리자 권한만 접근 허용
