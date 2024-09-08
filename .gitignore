@@ -483,8 +483,4 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
-# yml files
-application-*.yml
-!application-local.yml
-
 # End of https://www.toptal.com/developers/gitignore/api/macos
