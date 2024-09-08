@@ -3,7 +3,7 @@ name: Dev CI/CD
 on:
   push:
     branches:
-      - develop
+      - feature/36
 
 jobs:
   build:
