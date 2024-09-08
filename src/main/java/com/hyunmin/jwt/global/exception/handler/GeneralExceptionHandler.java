@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.redis.RedisConnectionFailureException;
+import org.springframework.data.redis.RedisSystemException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -57,6 +58,14 @@ public class GeneralExceptionHandler {
     protected ResponseEntity<ErrorResponse<Void>> handleRedisConnectionFailureException(RedisConnectionFailureException ex) {
         log.warn("[WARNING] {} : {}", ex.getClass(), ex.getMessage());
         ErrorCode errorCode = ErrorCode.REDIS_CONNECTION_FAILURE;
+        return ErrorResponse.handle(errorCode);
+    }
+
+    // Redis 서버 오류(REDIS_SYSTEM_EXCEPTION) 처리 메서드
+    @ExceptionHandler(RedisSystemException.class)
+    protected ResponseEntity<ErrorResponse<Void>> handleRedisSystemException(RedisSystemException ex) {
+        log.warn("[WARNING] {} : {}", ex.getClass(), ex.getMessage());
+        ErrorCode errorCode = ErrorCode.REDIS_SYSTEM_EXCEPTION;
         return ErrorResponse.handle(errorCode);
     }
 

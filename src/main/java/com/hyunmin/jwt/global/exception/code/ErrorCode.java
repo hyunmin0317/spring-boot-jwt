@@ -33,7 +33,8 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND(404, "MEMBER002", "해당 사용자가 없습니다."),
 
     // Redis Errors
-    REDIS_CONNECTION_FAILURE(500, "REDIS001", "Redis 서버에 연결할 수 없습니다.");
+    REDIS_CONNECTION_FAILURE(500, "REDIS001", "Redis 서버에 연결할 수 없습니다."),
+    REDIS_SYSTEM_EXCEPTION(500, "REDIS002", "Redis 시스템 예외가 발생했습니다.");
 
     private final int value;
     private final String code;
