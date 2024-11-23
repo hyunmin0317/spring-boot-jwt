@@ -1,9 +1,10 @@
 name: Release CI/CD
 
+# TODO 서비스 운영 시 master -> main
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
