@@ -40,16 +40,16 @@ public class MemberController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @DeleteMapping("/me")
-    public ResponseEntity<Void> deleteMember(@AuthMember Long memberId) {
-        memberCommandService.deleteMember(memberId);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping("/me")
+    @PatchMapping("/me")
     public ResponseEntity<MemberInfoResponseDto> changePassword(@AuthMember Long memberId,
                                                                 @Valid @RequestBody ChangePasswordRequestDto requestDto) {
         MemberInfoResponseDto responseDto = memberCommandService.changePassword(memberId, requestDto);
         return ResponseEntity.ok(responseDto);
+    }
+
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> deleteMember(@AuthMember Long memberId) {
+        memberCommandService.deleteMember(memberId);
+        return ResponseEntity.noContent().build();
     }
 }
