@@ -14,6 +14,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.Map;
 import java.util.Objects;
@@ -55,6 +56,13 @@ public class GeneralExceptionHandler {
     protected ResponseEntity<ErrorResponse<Void>> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
         log.warn("[WARNING] {} : {}", ex.getClass(), ex.getMessage());
         return ErrorResponse.handle(ErrorCode.METHOD_NOT_ALLOWED);
+    }
+
+    // 메서드 인자 타입 불일치(MethodArgumentTypeMismatchException) 처리 메서드
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    protected ResponseEntity<ErrorResponse<Void>> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+        log.warn("[WARNING] {} : {}", ex.getClass(), ex.getMessage());
+        return ErrorResponse.handle(ErrorCode.INVALID_ENUM_VALUE);
     }
 
     // 기타 모든 예외(Exception) 처리 메서드
