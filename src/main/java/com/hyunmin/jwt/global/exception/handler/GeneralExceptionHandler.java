@@ -62,22 +62,6 @@ public class GeneralExceptionHandler {
         return ErrorResponse.handle(errorCode);
     }
 
-    // Redis 서버 연결 실패(RedisConnectionFailureException) 처리 메서드
-    @ExceptionHandler(RedisConnectionFailureException.class)
-    protected ResponseEntity<ErrorResponse<Void>> handleRedisConnectionFailureException(RedisConnectionFailureException ex) {
-        log.warn("[WARNING] {} : {}", ex.getClass(), ex.getMessage());
-        ErrorCode errorCode = ErrorCode.REDIS_CONNECTION_FAILURE;
-        return ErrorResponse.handle(errorCode);
-    }
-
-    // Redis 서버 오류(REDIS_SYSTEM_EXCEPTION) 처리 메서드
-    @ExceptionHandler(RedisSystemException.class)
-    protected ResponseEntity<ErrorResponse<Void>> handleRedisSystemException(RedisSystemException ex) {
-        log.warn("[WARNING] {} : {}", ex.getClass(), ex.getMessage());
-        ErrorCode errorCode = ErrorCode.REDIS_SYSTEM_EXCEPTION;
-        return ErrorResponse.handle(errorCode);
-    }
-
     // 기타 모든 예외(Exception) 처리 메서드
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse<Void>> handleException(Exception ex) {
