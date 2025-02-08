@@ -21,9 +21,3 @@
   <img src="https://img.shields.io/badge/GitHub-181717?style=round-square&logo=github&logoColor=white"/>
   <img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=round-square&logo=githubactions&logoColor=white"/>
   <img src="https://img.shields.io/badge/Docker-2496ED?style=round-square&logo=docker&logoColor=white"/>
-
-* #### Deploy
-  <img src="https://img.shields.io/badge/AWS-232F3E?style=round-square&logo=amazonwebservices&logoColor=white"/>
-  <img src="https://img.shields.io/badge/EC2-FF9900?style=round-square&logo=amazonec2&logoColor=white"/>
-  <img src="https://img.shields.io/badge/RDS-527FFF?style=round-square&logo=amazonrds&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Elastic Beanstalk-FF9900?style=round-square&logo=awselasticloadbalancing&logoColor=white"/>
