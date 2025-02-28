@@ -51,7 +51,7 @@ public class AccountService {
         String accessToken = jwtTokenProvider.createAccessToken(memberId, memberRole, false);
         String refreshToken = jwtTokenProvider.createAccessToken(memberId, memberRole, true);
         refreshTokenService.saveRefreshToken(memberId, refreshToken);
-        return new LoginResponseDto(memberId, accessToken, refreshToken);
+        return AccountMapper.INSTANCE.toDto(memberId, accessToken, refreshToken);
     }
 
     private void validateUsername(String username) {
