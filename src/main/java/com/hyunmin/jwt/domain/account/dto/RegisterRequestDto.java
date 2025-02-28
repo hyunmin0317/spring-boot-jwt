@@ -1,6 +1,5 @@
 package com.hyunmin.jwt.domain.account.dto;
 
-import com.hyunmin.jwt.global.common.entity.Member;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -13,10 +12,4 @@ public record RegisterRequestDto(
         String password
 ) {
 
-    public Member toEntity(String encodedPw) {
-        return Member.builder()
-                .username(username)
-                .password(encodedPw)
-                .build();
-    }
 }

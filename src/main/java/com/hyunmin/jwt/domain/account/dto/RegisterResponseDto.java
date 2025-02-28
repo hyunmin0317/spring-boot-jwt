@@ -1,6 +1,5 @@
 package com.hyunmin.jwt.domain.account.dto;
 
-import com.hyunmin.jwt.global.common.entity.Member;
 import com.hyunmin.jwt.global.common.entity.enums.MemberRole;
 import lombok.Builder;
 
@@ -14,12 +13,4 @@ public record RegisterResponseDto(
         LocalDateTime createdAt
 ) {
 
-    public static RegisterResponseDto from(Member member) {
-        return RegisterResponseDto.builder()
-                .id(member.getId())
-                .username(member.getUsername())
-                .role(member.getRole())
-                .createdAt(member.getCreatedAt())
-                .build();
-    }
 }
