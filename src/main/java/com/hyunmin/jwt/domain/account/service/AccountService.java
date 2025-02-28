@@ -2,6 +2,7 @@ package com.hyunmin.jwt.domain.account.service;
 
 import com.hyunmin.jwt.domain.account.dto.*;
 import com.hyunmin.jwt.domain.account.entity.RefreshToken;
+import com.hyunmin.jwt.domain.account.mapper.AccountMapper;
 import com.hyunmin.jwt.global.common.entity.Member;
 import com.hyunmin.jwt.global.common.entity.enums.MemberRole;
 import com.hyunmin.jwt.global.common.repository.MemberRepository;
@@ -26,8 +27,8 @@ public class AccountService {
     public RegisterResponseDto register(RegisterRequestDto requestDto) {
         validateUsername(requestDto.username());
         String encodedPw = passwordEncoder.encode(requestDto.password());
-        Member member = requestDto.toEntity(encodedPw);
-        return RegisterResponseDto.from(memberRepository.save(member));
+        Member member = AccountMapper.INSTANCE.toEntity(requestDto, encodedPw);
+        return AccountMapper.INSTANCE.toDto(memberRepository.save(member));
     }
 
     public LoginResponseDto login(LoginRequestDto requestDto) {
