@@ -12,7 +12,7 @@ public interface MemberMapper {
 
     MemberMapper INSTANCE = Mappers.getMapper(MemberMapper.class);
 
-    @Mapping(source = "role", target = "memberRole")
+    @Mapping(target = "memberRole", source = "role")
     MemberInfoResponseDto toDto(Member member);
 
     default Page<MemberInfoResponseDto> toDto(Page<Member> memberPage) {
