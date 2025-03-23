@@ -13,6 +13,8 @@ public interface AccountMapper {
 
     AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "role", ignore = true)
     @Mapping(target = "password", source = "encodedPw")
     Member toEntity(RegisterRequest request, String encodedPw);
 
