@@ -19,20 +19,20 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponseDto> register(@Valid @RequestBody RegisterRequestDto requestDto) {
-        RegisterResponseDto responseDto = accountService.register(requestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request) {
+        RegisterResponse response = accountService.register(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto requestDto) {
-        LoginResponseDto responseDto = accountService.login(requestDto);
-        return ResponseEntity.ok(responseDto);
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+        LoginResponse response = accountService.login(request);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<LoginResponseDto> refresh(@Valid @RequestBody RefreshRequestDto requestDto) {
-        LoginResponseDto responseDto = accountService.refresh(requestDto);
-        return ResponseEntity.ok(responseDto);
+    public ResponseEntity<LoginResponse> refresh(@Valid @RequestBody RefreshRequest request) {
+        LoginResponse response = accountService.refresh(request);
+        return ResponseEntity.ok(response);
     }
 }

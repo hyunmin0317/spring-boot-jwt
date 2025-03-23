@@ -24,34 +24,34 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public RegisterResponseDto register(RegisterRequestDto requestDto) {
-        validateUsername(requestDto.username());
-        String encodedPw = passwordEncoder.encode(requestDto.password());
-        Member member = AccountMapper.INSTANCE.toEntity(requestDto, encodedPw);
-        return AccountMapper.INSTANCE.toDto(memberRepository.save(member));
+    public RegisterResponse register(RegisterRequest request) {
+        validateUsername(request.username());
+        String encodedPw = passwordEncoder.encode(request.password());
+        Member member = AccountMapper.INSTANCE.toEntity(request, encodedPw);
+        return AccountMapper.INSTANCE.toResponse(memberRepository.save(member));
     }
 
-    public LoginResponseDto login(LoginRequestDto requestDto) {
-        Member member = memberRepository.findByUsername(requestDto.username())
+    public LoginResponse login(LoginRequest request) {
+        Member member = memberRepository.findByUsername(request.username())
                 .orElseThrow(() -> new GeneralException(ErrorCode.ACCOUNT_NOT_FOUND));
-        checkPassword(requestDto.password(), member.getPassword());
+        checkPassword(request.password(), member.getPassword());
         return generateToken(member.getId(), member.getRole());
     }
 
-    public LoginResponseDto refresh(RefreshRequestDto requestDto) {
-        jwtTokenProvider.validateToken(requestDto.refreshToken(), true);
-        RefreshToken oldRefreshToken = refreshTokenService.findRefreshToken(requestDto.refreshToken());
+    public LoginResponse refresh(RefreshRequest request) {
+        jwtTokenProvider.validateToken(request.refreshToken(), true);
+        RefreshToken oldRefreshToken = refreshTokenService.findRefreshToken(request.refreshToken());
         Member member = memberRepository.findById(oldRefreshToken.getMemberId())
                 .orElseThrow(() -> new GeneralException(ErrorCode.ACCOUNT_NOT_FOUND));
         refreshTokenService.deleteRefreshToken(oldRefreshToken.getToken());
         return generateToken(member.getId(), member.getRole());
     }
 
-    private LoginResponseDto generateToken(Long memberId, MemberRole memberRole) {
+    private LoginResponse generateToken(Long memberId, MemberRole memberRole) {
         String accessToken = jwtTokenProvider.createAccessToken(memberId, memberRole, false);
         String refreshToken = jwtTokenProvider.createAccessToken(memberId, memberRole, true);
         refreshTokenService.saveRefreshToken(memberId, refreshToken);
-        return AccountMapper.INSTANCE.toDto(memberId, accessToken, refreshToken);
+        return AccountMapper.INSTANCE.toResponse(memberId, accessToken, refreshToken);
     }
 
     private void validateUsername(String username) {

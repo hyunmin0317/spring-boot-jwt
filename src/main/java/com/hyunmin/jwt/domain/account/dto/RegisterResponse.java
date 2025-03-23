@@ -6,7 +6,7 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 @Builder
-public record RegisterResponseDto(
+public record RegisterResponse(
         Long id,
         String username,
         MemberRole role,

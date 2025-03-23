@@ -3,7 +3,7 @@ package com.hyunmin.jwt.domain.account.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public record LoginRequestDto(
+public record LoginRequest(
         @NotBlank(message = "아이디 입력은 필수 입니다.")
         String username,
 

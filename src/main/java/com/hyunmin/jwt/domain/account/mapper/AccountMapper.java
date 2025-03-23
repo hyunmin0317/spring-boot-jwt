@@ -1,8 +1,8 @@
 package com.hyunmin.jwt.domain.account.mapper;
 
-import com.hyunmin.jwt.domain.account.dto.LoginResponseDto;
-import com.hyunmin.jwt.domain.account.dto.RegisterRequestDto;
-import com.hyunmin.jwt.domain.account.dto.RegisterResponseDto;
+import com.hyunmin.jwt.domain.account.dto.LoginResponse;
+import com.hyunmin.jwt.domain.account.dto.RegisterRequest;
+import com.hyunmin.jwt.domain.account.dto.RegisterResponse;
 import com.hyunmin.jwt.global.common.entity.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -13,12 +13,12 @@ public interface AccountMapper {
 
     AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
 
-    RegisterResponseDto toDto(Member member);
-
     @Mapping(target = "password", source = "encodedPw")
-    Member toEntity(RegisterRequestDto requestDto, String encodedPw);
+    Member toEntity(RegisterRequest request, String encodedPw);
 
-    default LoginResponseDto toDto(Long memberId, String accessToken, String refreshToken) {
-        return new LoginResponseDto(memberId, accessToken, refreshToken);
+    RegisterResponse toResponse(Member member);
+
+    default LoginResponse toResponse(Long memberId, String accessToken, String refreshToken) {
+        return new LoginResponse(memberId, accessToken, refreshToken);
     }
 }
