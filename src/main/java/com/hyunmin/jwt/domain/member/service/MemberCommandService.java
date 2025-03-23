@@ -1,7 +1,7 @@
 package com.hyunmin.jwt.domain.member.service;
 
-import com.hyunmin.jwt.domain.member.dto.ChangePasswordRequestDto;
-import com.hyunmin.jwt.domain.member.dto.MemberInfoResponseDto;
+import com.hyunmin.jwt.domain.member.dto.ChangePasswordRequest;
+import com.hyunmin.jwt.domain.member.dto.MemberInfoResponse;
 import com.hyunmin.jwt.domain.member.mapper.MemberMapper;
 import com.hyunmin.jwt.global.common.entity.Member;
 import com.hyunmin.jwt.global.common.repository.MemberRepository;
@@ -20,11 +20,11 @@ public class MemberCommandService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public MemberInfoResponseDto changePassword(Long id, ChangePasswordRequestDto requestDto) {
+    public MemberInfoResponse changePassword(Long id, ChangePasswordRequest request) {
         Member member = memberRepository.findById(id).orElseThrow(() -> new GeneralException(ErrorCode.MEMBER_NOT_FOUND));
-        String newEncodedPw = passwordEncoder.encode(requestDto.password());
+        String newEncodedPw = passwordEncoder.encode(request.password());
         member.changePassword(newEncodedPw);
-        return MemberMapper.INSTANCE.toDto(member);
+        return MemberMapper.INSTANCE.toResponse(member);
     }
 
     public void deleteMember(Long id) {

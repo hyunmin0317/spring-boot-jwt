@@ -1,6 +1,6 @@
 package com.hyunmin.jwt.domain.member.service;
 
-import com.hyunmin.jwt.domain.member.dto.MemberInfoResponseDto;
+import com.hyunmin.jwt.domain.member.dto.MemberInfoResponse;
 import com.hyunmin.jwt.domain.member.mapper.MemberMapper;
 import com.hyunmin.jwt.global.common.entity.Member;
 import com.hyunmin.jwt.global.common.repository.MemberRepository;
@@ -19,14 +19,14 @@ public class MemberQueryService {
 
     private final MemberRepository memberRepository;
 
-    public Page<MemberInfoResponseDto> findAll(Pageable pageable) {
+    public Page<MemberInfoResponse> findAll(Pageable pageable) {
         Page<Member> memberPage = memberRepository.findAll(pageable);
-        return MemberMapper.INSTANCE.toDto(memberPage);
+        return MemberMapper.INSTANCE.toResponse(memberPage);
     }
 
-    public MemberInfoResponseDto findById(Long id) {
+    public MemberInfoResponse findById(Long id) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new GeneralException(ErrorCode.MEMBER_NOT_FOUND));
-        return MemberMapper.INSTANCE.toDto(member);
+        return MemberMapper.INSTANCE.toResponse(member);
     }
 }
