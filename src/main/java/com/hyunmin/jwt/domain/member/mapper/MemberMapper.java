@@ -1,6 +1,6 @@
 package com.hyunmin.jwt.domain.member.mapper;
 
-import com.hyunmin.jwt.domain.member.dto.MemberInfoResponseDto;
+import com.hyunmin.jwt.domain.member.dto.MemberInfoResponse;
 import com.hyunmin.jwt.global.common.entity.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -13,9 +13,9 @@ public interface MemberMapper {
     MemberMapper INSTANCE = Mappers.getMapper(MemberMapper.class);
 
     @Mapping(target = "memberRole", source = "role")
-    MemberInfoResponseDto toDto(Member member);
+    MemberInfoResponse toResponse(Member member);
 
-    default Page<MemberInfoResponseDto> toDto(Page<Member> memberPage) {
-        return memberPage.map(this::toDto);
+    default Page<MemberInfoResponse> toResponse(Page<Member> memberPage) {
+        return memberPage.map(this::toResponse);
     }
 }
